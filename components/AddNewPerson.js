@@ -5,7 +5,8 @@ import InputElement from './InputElement';
 import ButtonElement from './ButtonElement';
 
 const AddNewPerson = ({id, updateState}) => {
-  const [formState, setFormState] = useState({age: '', name: ''});
+  const initialFormState = {age: '', name: ''};
+  const [formState, setFormState] = useState(initialFormState);
   const [isLoading, setIsLoading] = useState(false);
 
   const updateFormState = (key, newValue) => {
@@ -24,6 +25,7 @@ const AddNewPerson = ({id, updateState}) => {
     });
     updateState(); // Fetch data again to display the updated values
     setIsLoading(false);
+    setFormState(initialFormState);
   };
   return (
     <View style={{borderBottomWidth: 2}}>
