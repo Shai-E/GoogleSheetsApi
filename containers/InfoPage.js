@@ -16,6 +16,7 @@ import {useKeyboardState} from '../hooks/useKeyboardState';
 
 const InfoPage = () => {
   const [data, setData] = useState([]);
+  const prevData = useRef();
   const [currentPerson, setCurrentPerson] = useState('1');
   const isKeyboardOpen = useKeyboardState();
   const scrollViewRef = useRef();
@@ -25,7 +26,10 @@ const InfoPage = () => {
   }, []);
 
   useEffect(() => {
-    scrollViewRef.current?.scrollToEnd({animated: true});
+    if (prevData.current?.length + 1 === data.length) {
+      scrollViewRef.current?.scrollToEnd({animated: true});
+    }
+    prevData.current = data;
   }, [data]);
 
   const updateState = async () => {
