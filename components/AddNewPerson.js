@@ -1,10 +1,12 @@
 import {useState} from 'react';
-import {Button, Text, TextInput, View} from 'react-native';
+import {Text, View} from 'react-native';
 import {handleAddNewPersonAsync} from '../api/integrationWithGoogleSheetsApi';
 import InputElement from './InputElement';
+import ButtonElement from './ButtonElement';
 
 const AddNewPerson = ({id, updateState}) => {
   const [formState, setFormState] = useState({age: '', name: ''});
+  const [isLoading, setIsLoading] = useState(false);
 
   const updateFormState = (key, newValue) => {
     setFormState(prevState => ({
@@ -14,12 +16,14 @@ const AddNewPerson = ({id, updateState}) => {
   };
 
   const handleAddPerson = async () => {
+    setIsLoading(true);
     await handleAddNewPersonAsync({
       Id: id,
       Age: formState.age,
       Name: formState.name,
     });
     updateState(); // Fetch data again to display the updated values
+    setIsLoading(false);
   };
   return (
     <View style={{borderBottomWidth: 2}}>
@@ -34,7 +38,11 @@ const AddNewPerson = ({id, updateState}) => {
         onChangeText={newValue => updateFormState('age', newValue)}
         placeholder="Age"
       />
-      <Button title="Join" onPress={handleAddPerson} />
+      <ButtonElement
+        title="Join"
+        onPress={handleAddPerson}
+        isLoading={isLoading}
+      />
     </View>
   );
 };

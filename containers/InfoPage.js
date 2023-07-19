@@ -6,6 +6,7 @@ import {
   ScrollView,
   KeyboardAvoidingView,
   Platform,
+  StyleSheet,
 } from 'react-native';
 import InfoCard from '../components/InfoCard';
 import {fetchDataFromSpreadsheetAsync} from '../api/integrationWithGoogleSheetsApi';
@@ -50,51 +51,43 @@ const InfoPage = () => {
     setData(newData);
   };
 
+  const currHeight = isKeyboardOpen
+    ? Platform.OS === 'ios'
+      ? currentPerson
+        ? '46%'
+        : '58%'
+      : currentPerson
+      ? '75%'
+      : '89%'
+    : currentPerson
+    ? '83%'
+    : '90%';
+
   return (
     <TouchableWithoutFeedback
       onPress={() => {
         setCurrentPerson(null);
       }}>
-      <View style={{flex: 1, justifyContent: 'flex-start'}}>
+      <View style={styles.screen}>
         {data?.length === 0 ? (
           <Text>No data found.</Text>
         ) : (
           <>
             <AddNewPerson id={data?.length + 1} updateState={updateState} />
-            <View style={{flex: 1, justifyContent: 'space-between'}}>
+            <View style={styles.container}>
               <View style={{flex: 1}}>
                 {currentPerson && (
                   <ChangeAgeForm id={currentPerson} updateState={updateState} />
                 )}
-                <View
-                  style={{
-                    height: '20%',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                  }}>
+                <View style={styles.header}>
                   <Text>Welcome to The List</Text>
                   <Text>Are You In?</Text>
                 </View>
                 <KeyboardAvoidingView>
-                  <View
-                    style={{
-                      height: isKeyboardOpen
-                        ? Platform.OS === 'ios'
-                          ? currentPerson
-                            ? '46%'
-                            : '58%'
-                          : currentPerson
-                          ? '75%'
-                          : '89%'
-                        : currentPerson
-                        ? '83%'
-                        : '90%',
-                    }}>
+                  <View style={{height: currHeight}}>
                     <ScrollView
                       ref={scrollViewRef}
-                      contentContainerStyle={{
-                        justifyContent: 'space-between',
-                      }}>
+                      contentContainerStyle={styles.scrollview}>
                       {data?.map((row, index) => (
                         <InfoCard
                           key={index}
@@ -116,5 +109,18 @@ const InfoPage = () => {
     </TouchableWithoutFeedback>
   );
 };
+
+const styles = StyleSheet.create({
+  screen: {flex: 1, justifyContent: 'flex-start'},
+  header: {
+    height: '20%',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  container: {flex: 1, justifyContent: 'space-between'},
+  scrollview: {
+    justifyContent: 'space-between',
+  },
+});
 
 export default InfoPage;

@@ -1,13 +1,8 @@
 import {useState} from 'react';
-import {
-  ActivityIndicator,
-  Dimensions,
-  Text,
-  TouchableOpacity,
-  View,
-} from 'react-native';
+import {Dimensions, StyleSheet, Text, View} from 'react-native';
 import {handleValueChangeAsync} from '../api/integrationWithGoogleSheetsApi';
 import InputElement from './InputElement';
+import ButtonElement from './ButtonElement';
 
 const ChangeAgeForm = ({id, updateState}) => {
   const [newAge, setNewAge] = useState('');
@@ -21,16 +16,8 @@ const ChangeAgeForm = ({id, updateState}) => {
     setIsLoading(false);
   };
   return (
-    <View
-      style={{
-        // flex: 1,
-        // backgroundColor: 'red',
-        justifyContent: 'space-between',
-        height: Dimensions.get('window').height * 0.1,
-
-        borderBottomWidth: 2,
-      }}>
-      <Text style={{textAlign: 'center'}}>
+    <View style={styles.formContainer}>
+      <Text style={styles.title}>
         If there has been a mistake, insert your actual age:
       </Text>
       <InputElement
@@ -38,30 +25,22 @@ const ChangeAgeForm = ({id, updateState}) => {
         onChangeText={setNewAge}
         placeholder="New Age"
       />
-      <TouchableOpacity
+      <ButtonElement
         onPress={handleAgeChange}
-        style={{
-          width: '100%',
-          alignItems: 'center',
-          justify: 'center',
-          backgroundColor: '#2196f3',
-          color: 'white',
-          justifyContent: 'center',
-        }}>
-        {isLoading ? (
-          <ActivityIndicator />
-        ) : (
-          <Text
-            style={{
-              fontWeight: 'bold',
-              color: 'white',
-            }}>
-            UPDATE AGE
-          </Text>
-        )}
-      </TouchableOpacity>
+        title={'UPDATE AGE'}
+        isLoading={isLoading}
+      />
     </View>
   );
 };
+
+const styles = StyleSheet.create({
+  formContainer: {
+    justifyContent: 'space-between',
+    height: Dimensions.get('window').height * 0.1,
+    borderBottomWidth: 2,
+  },
+  title: {textAlign: 'center'},
+});
 
 export default ChangeAgeForm;
