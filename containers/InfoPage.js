@@ -47,7 +47,6 @@ const InfoPage = () => {
         }, []),
       )
       .filter(row => row.length > 0);
-    console.log(newData);
     setData(newData);
   };
 
