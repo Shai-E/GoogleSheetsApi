@@ -16,7 +16,7 @@ import {useKeyboardState} from '../hooks/useKeyboardState';
 
 const InfoPage = () => {
   const [data, setData] = useState([]);
-  const [currentPerson, setCurrentPerson] = useState();
+  const [currentPerson, setCurrentPerson] = useState('1');
   const isKeyboardOpen = useKeyboardState();
   const scrollViewRef = useRef();
 
