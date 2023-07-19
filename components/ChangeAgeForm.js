@@ -1,12 +1,8 @@
 import {useState} from 'react';
 import {
   ActivityIndicator,
-  Button,
   Dimensions,
-  KeyboardAvoidingView,
-  Platform,
   Text,
-  TextInput,
   TouchableOpacity,
   View,
 } from 'react-native';

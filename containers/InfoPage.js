@@ -1,5 +1,3 @@
-// const isDarkMode = useColorScheme() === 'dark';
-
 import React, {useEffect, useRef, useState} from 'react';
 import {
   View,
@@ -7,7 +5,6 @@ import {
   TouchableWithoutFeedback,
   ScrollView,
   KeyboardAvoidingView,
-  InputAccessoryView,
   Platform,
 } from 'react-native';
 import InfoCard from '../components/InfoCard';
